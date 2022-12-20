@@ -13,6 +13,13 @@ jobs:
         with:
           channel: 'stable'
           cache: true
+          
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+          cache: 'gradle'
 
       - name: Install dependencies
         run: flutter pub get
