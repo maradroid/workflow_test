@@ -30,10 +30,10 @@ jobs:
       #- name: Output flutter version
       #  run: echo 'version_number:' ${{ steps.get_flutter_versionn.outputs.version_number }} ' build_number:' ${{ steps.get_flutter_versionn.outputs.build_number }}
         
-      - name: Set new app version
-        uses: deusrobots/gh-action-flutter-pubspec-set-version@v1
-        with:
-          patch: ${{ steps.get_build_number.outputs.build_number }}
+      #- name: Set new app version
+      #  uses: deusrobots/gh-action-flutter-pubspec-set-version@v1
+      #  with:
+      #    patch: ${{ steps.get_build_number.outputs.build_number }}
           
       - name: Get new app version
         id: get_app_version
