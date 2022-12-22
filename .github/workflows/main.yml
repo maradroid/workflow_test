@@ -21,13 +21,7 @@ jobs:
           java-version: '11'
           cache: 'gradle'
           
-      #- name: Get flutter version
-      #  id: get_flutter_version
-      # uses: its404/get-flutter-version@v1.0.0
-      #- name: Output flutter version
-      #  run: echo 'version_number:' ${{ steps.get_flutter_version.outputs.version_number }} ' build_number:' ${{ steps.get_flutter_version.outputs.build_number }}
-          
-      - name: Increment flutter build number
+      - name: Increment build number
         uses: BentEngbers/flutter-change-version@v1.0.3
         
       - name: Get new build number
@@ -35,7 +29,16 @@ jobs:
         uses: its404/get-flutter-version@v1.0.0
       #- name: Output flutter version
       #  run: echo 'version_number:' ${{ steps.get_flutter_versionn.outputs.version_number }} ' build_number:' ${{ steps.get_flutter_versionn.outputs.build_number }}
-
+        
+      - name: Set new app version
+        uses: deusrobots/gh-action-flutter-pubspec-set-version@v1
+        with:
+          patch: ${{ steps.get_build_number.outputs.build_number }}
+          
+      - name: Get new app version
+        id: get_app_version
+        uses: its404/get-flutter-version@v1.0.0
+        
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
       
@@ -54,4 +57,4 @@ jobs:
           credentials: ${{secrets.DRIVE_CREDENTIALS}}
           filename: build/app/outputs/flutter-apk/app-release.apk
           folderId: ${{secrets.UPLOAD_FOLDER_ID}}
-          name: ${{ format('build_{0}_{1}.apk', steps.get_build_number.outputs.build_number, env.BUILD_DATE) }}
+          name: ${{ format('build_{0}_{1}.apk', steps.get_app_version.outputs.version_number, env.BUILD_DATE) }}
