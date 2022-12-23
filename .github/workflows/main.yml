@@ -47,3 +47,11 @@ jobs:
           filename: build/app/outputs/flutter-apk/app-release.apk
           folderId: ${{secrets.UPLOAD_FOLDER_ID}}
           name: ${{ format('build_{0}_{1}.apk', steps.get_build_number.outputs.build_number, env.BUILD_DATE) }}
+      
+      - name: Upload to gdrive 2
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{secrets.DRIVE_CREDENTIALS}}
+          filename: build/app/outputs/flutter-apk/app-release.apk
+          folderId: ${{secrets.UPLOAD_FOLDER_ID}}
+          name: ${{ format('build_{0}_{1}_2.apk', steps.get_build_number.outputs.build_number, env.BUILD_DATE) }}
